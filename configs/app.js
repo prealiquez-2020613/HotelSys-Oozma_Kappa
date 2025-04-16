@@ -6,6 +6,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 import authRoutes from '../src/auth/auth.routes.js'
 import { limiter } from '../middlewares/rate.limit.js'
+import {initializeDatabase} from './initSetup.js'
 
 
 const configs = (app)=>{
@@ -28,6 +29,7 @@ export const initServer = async()=>{
     try{
         configs(app)
         routes(app)
+        await initializeDatabase();
         app.listen(process.env.PORT)
         console.log(`Server running in port ${process.env.PORT}`)
 
