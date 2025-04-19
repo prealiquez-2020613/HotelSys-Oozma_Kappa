@@ -6,6 +6,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 import authRoutes from '../src/auth/auth.routes.js'
 import roomRoutes from '../src/room/room.routes.js'
+import userRoutes from '../src/user/user.routes.js'
 import { limiter } from '../middlewares/rate.limit.js'
 import {initializeDatabase} from './initSetup.js'
 
@@ -21,7 +22,8 @@ const configs = (app)=>{
 
 const routes = (app)=>{
     app.use(authRoutes)
-    app.use(roomRoutes)
+    app.use('/v1/Room', roomRoutes)
+    app.use('/v1/User', userRoutes)
 }
 
 
