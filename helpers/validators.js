@@ -1,12 +1,12 @@
 import {body} from 'express-validator'
 import {validateErrorWithoutImg} from './validate.error.js'
-import {existUsername, existEmail} from './db.validators.js'
+import {existEmail, findUser} from './db.validators.js'
 
 export const UpdateValidator = [
     body('name', 'Name cannot be empty').optional().notEmpty(),
     body('surname', 'Surname cannot be empty').optional().notEmpty(),
     body('email', 'Email cannot be empty or is not a valid email').isEmail().optional().notEmpty().custom(existEmail),
-    body('username', 'Username cannot be empty').optional().notEmpty().toLowerCase().custom(existUsername),
+    body('username', 'Username cannot be empty').optional().notEmpty().toLowerCase().custom(findUser),
     body('phone', 'Phone cannot be empty or is not a valid phone').optional().notEmpty().isMobilePhone(),
     validateErrorWithoutImg
 ]

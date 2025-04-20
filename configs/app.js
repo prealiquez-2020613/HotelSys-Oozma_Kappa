@@ -7,6 +7,7 @@ import cors from 'cors'
 import authRoutes from '../src/auth/auth.routes.js'
 import hotelRoutes from '../src/hotel/hotel.routes.js'
 import roomRoutes from '../src/room/room.routes.js'
+import serviceRoutes from '../src/service/service.routes.js'
 import userRoutes from '../src/user/user.routes.js'
 import { limiter } from '../middlewares/rate.limit.js'
 import {initializeDatabase} from './initSetup.js'
@@ -26,6 +27,7 @@ const routes = (app)=>{
     app.use('/v1/hotel', hotelRoutes )
     app.use('/v1/Room', roomRoutes)
     app.use('/v1/User', userRoutes)
+    app.use('/v1/Service', serviceRoutes)
 }
 
 

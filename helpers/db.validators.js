@@ -20,3 +20,14 @@ export const existEmail = async(email)=>{
         throw new error(`Email ${email} already exist`)
     }
 }
+
+export const validateHotelId = async (hotelId) => {
+    const hotel = await Hotel.findById(hotelId);
+    if (!hotel) throw new Error('Hotel does not exist');
+    return true;
+};
+
+export const validatePrice = (price) => {
+    if (price < 0) throw new Error('Price cannot be negative');
+    return true;
+};
