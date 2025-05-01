@@ -22,7 +22,7 @@ const roomSchema = Schema(
             required: [true, 'Availability is a required field']
         },
         hotel: {
-            type: String,
+            type: Schema.Types.ObjectId,
             required: [true, 'Hotel reference is required']
         }
     }

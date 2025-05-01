@@ -71,9 +71,7 @@ export const createRoomValidator = [
         .isBoolean().withMessage('Availability must be true or false'),
 
     body('hotel')
-        .notEmpty().withMessage('Hotel reference cannot be empty')
-        .isString().withMessage('Hotel must be a string'),
-
+        .notEmpty().withMessage('Hotel reference cannot be empty'),
     validateErrorWithoutImg
 ]
 
@@ -101,8 +99,7 @@ export const updateRoomValidator = [
 
     body('hotel')
         .optional()
-        .notEmpty().withMessage('Hotel reference cannot be empty if provided')
-        .isString().withMessage('Hotel must be a string'),
+        .notEmpty().withMessage('Hotel reference cannot be empty if provided'),
 
     validateErrorWithoutImg
 ];
