@@ -10,8 +10,8 @@ const api = Router()
 api.post('/createService', [validateJwt, adminValidation, saveServiceValidator], saveService)
 api.put('/updateService/:id', [validateJwt, adminValidation, updateServiceValidator], updateService)
 api.delete('/deleteService/:id', [validateJwt, adminValidation, deleteServiceValidator], deleteService)
-api.get('/getAllServices', getAllServices)
-api.get('/getService/:id', getServiceValidator, getService)
-api.get('/getServicesByHotel/:hotelId', getServicesByHotelValidator, getServicesByHotel)
+api.get('/getAllServices', [validateJwt], getAllServices)
+api.get('/getService/:id', [validateJwt], getServiceValidator, getService)
+api.get('/getServicesByHotel/:hotelId', [validateJwt], getServicesByHotelValidator, getServicesByHotel)
 
 export default api
