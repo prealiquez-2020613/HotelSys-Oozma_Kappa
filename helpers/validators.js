@@ -42,3 +42,11 @@ export const updateRoleValidation = [
     body('newRole', 'Role is required').notEmpty(),
     validateErrorWithoutImg
 ]
+
+export const createReservationValidator = [
+    body('hotel', 'Hotel is required').notEmpty(),
+    body('room', 'Room is required').notEmpty(),
+    body('checkIn', 'Check-in date is required and must be a valid date').notEmpty().isISO8601(),
+    body('checkOut', 'Check-out date is required and must be a valid date').notEmpty().isISO8601(),
+    validateErrorWithoutImg
+]
