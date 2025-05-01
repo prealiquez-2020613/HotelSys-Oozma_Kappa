@@ -10,6 +10,7 @@ import roomRoutes from '../src/room/room.routes.js'
 import serviceRoutes from '../src/service/service.routes.js'
 import userRoutes from '../src/user/user.routes.js'
 import reservationRoutes from '../src/reservation/reservation.routes.js'
+import resourceRoutes from '../src/resource/resource.routes.js'
 import receiptRoutes from '../src/receipt/receipt.routes.js'
 import { limiter } from '../middlewares/rate.limit.js'
 import {initializeDatabase} from './initSetup.js'
@@ -32,6 +33,7 @@ const routes = (app)=>{
     app.use('/v1/Service', serviceRoutes)
     app.use('/V1/Reservation', reservationRoutes)
     app.use('/v1/Receipt', receiptRoutes)
+    app.use('/v1/resource', resourceRoutes)
 }
 
 
