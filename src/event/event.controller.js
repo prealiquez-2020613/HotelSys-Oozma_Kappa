@@ -1,29 +1,72 @@
 import Event from './event.model.js'
+import Service from '../service/service.model.js'
+import Resource from '../resource/resource.model.js'
 
 export const createEvent = async (req, res) => {
     try {
-        const { hotel, title, description, date } = req.body
+        const { hotel, title, description, date, resources = [], services = [], category } = req.body
 
-        const existingEvent = await Event.findOne({ date })
-        if (existingEvent) {
-            return res.status(400).send({ success: false, message: "There is already an event for this date" })
+        // Validar categoría base
+        const categoryBasePrices = {
+            WEDDING: 1500,
+            BIRTHDAY: 1200,
+            BUSINESS: 2000
         }
 
-        const newEvent = new Event({
+        const basePrice = categoryBasePrices[category?.toUpperCase()]
+        if (!basePrice) {
+            return res.status(400).send({ success: false, message: 'Invalid event category' })
+        }
+
+        // Convertir a arrays (por si vienen como strings)
+        const serviceArray = Array.isArray(services)
+            ? services
+            : typeof services === 'string'
+                ? services.split(',').map(s => s.trim())
+                : []
+
+        const resourceArray = Array.isArray(resources)
+            ? resources
+            : typeof resources === 'string'
+                ? resources.split(',').map(r => r.trim())
+                : []
+
+        // Obtener precios de services
+        const serviceDocs = await Service.find({ _id: { $in: serviceArray } })
+        const serviceTotal = serviceDocs.reduce((acc, s) => acc + s.price, 0)
+
+        // Obtener precios de resources
+        const resourceDocs = await Resource.find({ _id: { $in: resourceArray } })
+        const resourceTotal = resourceDocs.reduce((acc, r) => acc + r.price, 0)
+
+        // Calcular precio final
+        const totalPrice = basePrice + serviceTotal + resourceTotal
+
+        const event = new Event({
             hotel,
             title,
             description,
-            date
+            date,
+            category: category.toUpperCase(),
+            services: serviceArray,
+            resources: resourceArray,
+            price: totalPrice
         })
 
-        await newEvent.save()
+        await event.save()
 
-        return res.status(201).send({ success: true, message: "Event created successfully", event: newEvent })
+        return res.send({
+            success: true,
+            message: 'Event created successfully',
+            event
+        })
+
     } catch (err) {
         console.error(err)
-        return res.status(500).send({ success: false, message: "Error creating event", error: err.message })
+        return res.status(500).send({ success: false, message: 'Error creating event', err })
     }
 }
+  
 
 export const getAllEvents = async (req, res) => {
     try {

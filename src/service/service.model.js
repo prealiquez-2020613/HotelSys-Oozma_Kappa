@@ -4,7 +4,7 @@ const serviceSchema = new Schema(
     {
         hotel: {
             type: Schema.Types.ObjectId,
-            ref: "Hotels",
+            ref: "Hotel",
             required: [true, "Hotel is required"]
         },
         description: {
