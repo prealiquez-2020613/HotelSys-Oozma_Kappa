@@ -49,3 +49,60 @@ export const generateReceiptValidator = [
     body('eventId').optional().isMongoId(),
     validateErrorWithoutImg
 ]
+
+
+// --------------------------------------------------------Room Validators----------------------------------------------------------------------
+export const createRoomValidator = [
+    body('type')
+        .notEmpty().withMessage('Type cannot be empty')
+        .isString().withMessage('Type must be a string')
+        .isLength({ max: 30 }).withMessage('Type cannot exceed 30 characters'),
+
+    body('capacity')
+        .notEmpty().withMessage('Capacity cannot be empty')
+        .isInt({ min: 1 }).withMessage('Capacity must be an integer of at least 1'),
+
+    body('price')
+        .notEmpty().withMessage('Price cannot be empty')
+        .isFloat({ min: 0 }).withMessage('Price must be a positive number'),
+
+    body('availability')
+        .notEmpty().withMessage('Availability cannot be empty')
+        .isBoolean().withMessage('Availability must be true or false'),
+
+    body('hotel')
+        .notEmpty().withMessage('Hotel reference cannot be empty')
+        .isString().withMessage('Hotel must be a string'),
+
+    validateErrorWithoutImg
+]
+
+export const updateRoomValidator = [
+    body('type')
+        .optional()
+        .notEmpty().withMessage('Type cannot be empty if provided')
+        .isString().withMessage('Type must be a string')
+        .isLength({ max: 30 }).withMessage('Type cannot exceed 30 characters'),
+
+    body('capacity')
+        .optional()
+        .notEmpty().withMessage('Capacity cannot be empty if provided')
+        .isInt({ min: 1 }).withMessage('Capacity must be an integer of at least 1'),
+
+    body('price')
+        .optional()
+        .notEmpty().withMessage('Price cannot be empty if provided')
+        .isFloat({ min: 0 }).withMessage('Price must be a positive number'),
+
+    body('availability')
+        .optional()
+        .notEmpty().withMessage('Availability cannot be empty if provided')
+        .isBoolean().withMessage('Availability must be true or false'),
+
+    body('hotel')
+        .optional()
+        .notEmpty().withMessage('Hotel reference cannot be empty if provided')
+        .isString().withMessage('Hotel must be a string'),
+
+    validateErrorWithoutImg
+];

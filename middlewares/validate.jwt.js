@@ -34,3 +34,16 @@ export const adminValidation = (req, res, next) =>{
         return res.status(500).send({message : 'General Error'});
     }
 };
+
+//VALIDACION DE ADMIN DE HOTEL
+export const hotelAdminValidation = (req, res, next) =>{
+    try {
+        if(req.user.role !== 'ADMIN' || req.user.role !== "HOTEL_ADMIN"){
+            return res.status(403).send({message : 'ACCESS DENIED - Just ADMINS'});
+        }
+        next();
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({message : 'General Error'});
+    }
+};
