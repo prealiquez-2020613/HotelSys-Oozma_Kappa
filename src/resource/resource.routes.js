@@ -8,15 +8,15 @@ import {
 } from './resource.controller.js';
 
 import { resourceValidator, updateResourceValidator } from '../../helpers/validators.js'
-import { validateJwt, adminValidation } from '../../middlewares/validate.jwt.js';
+import { validateJwt, adminValidation, hotelAdminValidation } from '../../middlewares/validate.jwt.js';
 
 const api = Router();
 
 // Rutas privadas (solo admins)
-api.post('/createResource', [validateJwt, adminValidation, resourceValidator], saveResource);
-api.put('/updateResource/:id', [validateJwt, adminValidation, updateResourceValidator], updateResource);
-api.put('/deleteResource/:id', [validateJwt, adminValidation], deleteResource);
-api.get('/getAllResources', [validateJwt, adminValidation], getAllResources);
-api.get('/getResource/:id', [validateJwt, adminValidation], getResource);
+api.post('/createResource', [validateJwt, hotelAdminValidation, resourceValidator], saveResource);
+api.put('/updateResource/:id', [validateJwt, hotelAdminValidation, updateResourceValidator], updateResource);
+api.put('/deleteResource/:id', [validateJwt, hotelAdminValidation], deleteResource);
+api.get('/getAllResources', [validateJwt], getAllResources);
+api.get('/getResource/:id', [validateJwt], getResource);
 
 export default api;
