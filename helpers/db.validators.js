@@ -13,6 +13,31 @@ export const findUser = async (id)=>{
     }
 }
 
+export const hotelExists = async (id) => {
+    try {
+        const hotel = await Hotel.findById(id)
+        if (!hotel) {
+            throw new Error('Hotel does not exist')
+        }
+        return true
+    } catch (error) {
+        throw new Error('Invalid hotel ID or hotel does not exist')
+    }
+}
+
+
+export const serviceExists = async (id) => {
+    try {
+        const service = await Service.findById(id)
+        if (!service) {
+            throw new Error('Service does not exist')
+        }
+        return true
+    } catch (error) {
+        throw new Error('Invalid service ID or service does not exist')
+    }
+}
+
 export const existUsername = async(username)=>{
     const alreadyUsername = await User.findOne({username});
     if(alreadyUsername){
