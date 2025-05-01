@@ -14,8 +14,8 @@ const api = Router();
 
 // RUTAS PRIVADAS 
 api.post('/createHotel', [validateJwt, adminValidation, hotelValidator], saveHotel)
-api.put('/updateHotel/:id', [validateJwt], [hotelAdminValidation], [updatehotelValidator], updateHotel)
-api.put('/deleteHotel/:id', [validateJwt], [hotelAdminValidation],  deleteHotel)
+api.put('/updateHotel/:id', [validateJwt, hotelAdminValidation, adminValidation, updatehotelValidator], updateHotel)
+api.put('/deleteHotel/:id', [validateJwt, hotelAdminValidation, adminValidation],  deleteHotel)
 api.get('/getAllHotels', [validateJwt], getAllHotels)
 api.get('/getHotel/:id', [validateJwt], getHotel)
 
