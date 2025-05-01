@@ -200,8 +200,6 @@ export const addEventValidation = [
     body('title', 'Title is required and must be max 25 characters').notEmpty().isLength({ max: 25 }),
     body('description', 'Description is required and must be max 100 characters').notEmpty().isLength({ max: 100 }),
     body('date', 'Date is required and must be valid').notEmpty().isISO8601(),
-    body('resources', 'Resources must be an array').optional().isArray(),
-    body('services', 'Services must be an array').optional().isArray(),
     body('category', 'Category is required and must be one of: wedding, birthday, businnes').notEmpty(),
     validateErrorWithoutImg
 ]

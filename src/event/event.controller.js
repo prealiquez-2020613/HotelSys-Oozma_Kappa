@@ -6,7 +6,6 @@ export const createEvent = async (req, res) => {
     try {
         const { hotel, title, description, date, resources = [], services = [], category } = req.body
 
-        // Validar categoría base
         const categoryBasePrices = {
             WEDDING: 1500,
             BIRTHDAY: 1200,
@@ -18,7 +17,6 @@ export const createEvent = async (req, res) => {
             return res.status(400).send({ success: false, message: 'Invalid event category' })
         }
 
-        // Convertir a arrays (por si vienen como strings)
         const serviceArray = Array.isArray(services)
             ? services
             : typeof services === 'string'
@@ -31,15 +29,12 @@ export const createEvent = async (req, res) => {
                 ? resources.split(',').map(r => r.trim())
                 : []
 
-        // Obtener precios de services
         const serviceDocs = await Service.find({ _id: { $in: serviceArray } })
         const serviceTotal = serviceDocs.reduce((acc, s) => acc + s.price, 0)
 
-        // Obtener precios de resources
         const resourceDocs = await Resource.find({ _id: { $in: resourceArray } })
         const resourceTotal = resourceDocs.reduce((acc, r) => acc + r.price, 0)
 
-        // Calcular precio final
         const totalPrice = basePrice + serviceTotal + resourceTotal
 
         const event = new Event({
