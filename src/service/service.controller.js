@@ -4,7 +4,12 @@ import Hotel from '../hotel/hotel.model.js'
 // CREAR SERVICIO
 export const saveService = async (req, res) => {
     try {
-        const service = new Service(req.body)
+        const {hotel,description,price} = new Service(req.body)
+        const service = new Service({
+            hotel,
+            description,
+            price
+        })
         await service.save()
         return res.send({ success: true, message: 'Service created successfully', service })
     } catch (error) {

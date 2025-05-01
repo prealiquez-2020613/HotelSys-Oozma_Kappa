@@ -2,10 +2,10 @@ import { Schema, model } from 'mongoose'
 
 const eventSchema = new Schema(
     {  
-        hotel: {
-            type: String,
-            required: [true, 'The name of the hotel is mandatory'],
-            maxLength: [25, 'The hotel name cannot exceed 25 characters.'],
+        hotel:{
+            type: Schema.Types.ObjectId,
+            ref: 'Hotel',
+            required: true
         },
         title: {
             type: String,
@@ -21,10 +21,33 @@ const eventSchema = new Schema(
             type: Date,
             required: [true, 'The date of the event is mandatory'],
         },
+        resources: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Resource'
+            }
+        ],
+        services: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Services'
+            }
+        ],
+        price: {
+            type: Number,
+            required: [true, 'The price is mandatory']
+        },
+        category: {
+            type: String,
+            enum: ['WEDDING','BIRTHDAY','BUSINESS'],
+            required: [true, 'The category is mandatory'],
+            uppercase: true
+        },
         status: { 
             type: String, 
-            enum: ['scheduled', 'cancelled', 'completed'], 
-            default: 'scheduled'
+            enum: ['SCHEDULED', 'CANCELLED', 'COMPLETED'], 
+            uppercase: true,
+            default: 'SCHEDULED'
         }
     }
 ) 
