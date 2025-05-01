@@ -1,6 +1,6 @@
-import {body} from 'express-validator'
+import {body, param} from 'express-validator'
 import {validateErrorWithoutImg} from './validate.error.js'
-import {existEmail, findUser, existUsername} from './db.validators.js'
+import {existEmail, findUser, existUsername, hotelExists, serviceExists} from './db.validators.js'
 
 export const registerValidator = [
     body('name', 'Name cannot be empty').notEmpty(),
@@ -106,3 +106,56 @@ export const updateRoomValidator = [
 
     validateErrorWithoutImg
 ];
+
+// Service
+
+export const saveServiceValidator = [
+    body('hotel', 'Hotel ID is required').notEmpty()
+        .isMongoId().withMessage('Invalid hotel ID format')
+        .custom(hotelExists),
+    body('description', 'Description is required').notEmpty()
+        .isLength({ max: 100 }).withMessage('Description cannot exceed 100 characters'),
+    body('price', 'Price is required').notEmpty()
+        .isNumeric().withMessage('Price must be a number')
+        .custom(value => value >= 0).withMessage('Price cannot be negative'),
+    validateErrorWithoutImg
+]
+
+export const updateServiceValidator = [
+    param('id', 'Service ID is invalid')
+        .isMongoId().withMessage('Invalid service ID format')
+        .custom(serviceExists),
+    body('hotel', 'Hotel ID must be valid MongoDB ID')
+        .optional()
+        .isMongoId().withMessage('Invalid hotel ID format')
+        .custom(hotelExists),
+    body('description', 'Description must be valid')
+        .optional()
+        .notEmpty().withMessage('Description cannot be empty')
+        .isLength({ max: 100 }).withMessage('Description cannot exceed 100 characters'),
+    body('price', 'Price must be valid')
+        .optional()
+        .isNumeric().withMessage('Price must be a number')
+        .custom(value => value >= 0).withMessage('Price cannot be negative'),
+    validateErrorWithoutImg
+]
+
+export const deleteServiceValidator = [
+    param('id', 'Service ID is invalid')
+        .isMongoId().withMessage('Invalid service ID format')
+        .custom(serviceExists),
+    validateErrorWithoutImg
+]
+
+export const getServiceValidator = [
+    param('id', 'Service ID is invalid')
+        .isMongoId().withMessage('Invalid service ID format'),
+    validateErrorWithoutImg
+]
+
+export const getServicesByHotelValidator = [
+    param('hotelId', 'Hotel ID is invalid')
+        .isMongoId().withMessage('Invalid hotel ID format')
+        .custom(hotelExists),
+    validateErrorWithoutImg
+]

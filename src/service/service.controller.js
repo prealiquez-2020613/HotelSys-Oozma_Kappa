@@ -4,10 +4,6 @@ import Hotel from '../hotel/hotel.model.js'
 // CREAR SERVICIO
 export const saveService = async (req, res) => {
     try {
-        // Verificar que el hotel existe
-        const hotel = await Hotel.findById(req.body.hotel)
-        if (!hotel) return res.status(404).send({ success: false, message: 'Hotel not found' })
-        
         const service = new Service(req.body)
         await service.save()
         return res.send({ success: true, message: 'Service created successfully', service })
@@ -22,15 +18,7 @@ export const updateService = async (req, res) => {
     try {
         const { id } = req.params
         const data = req.body
-        
-        // Si se actualiza el hotel, verificar que existe
-        if (data.hotel) {
-            const hotel = await Hotel.findById(data.hotel);
-            if (!hotel) return res.status(404).send({ success: false, message: 'Hotel not found' })
-        }
-        
         const service = await Service.findByIdAndUpdate(id, data, { new: true });
-        if (!service) return res.status(404).send({ success: false, message: 'Service not found' })
         
         return res.send({ success: true, message: 'Service updated successfully', service })
     } catch (error) {
@@ -43,10 +31,7 @@ export const updateService = async (req, res) => {
 export const deleteService = async (req, res) => {
     try {
         const id = req.params.id
-        if (!id) return res.status(400).send({ message: 'Invalid ID' })
-        
         const deleteService = await Service.findByIdAndDelete(id)
-        if (!deleteService) return res.status(404).send({ message: 'Service not found' })
         
         return res.send({ message: 'Service deleted successfully' })
     } catch (err) {
@@ -86,11 +71,6 @@ export const getService = async (req, res) => {
 export const getServicesByHotel = async (req, res) => {
     try {
         const { hotelId } = req.params
-        
-        // Verificar que el hotel existe
-        const hotel = await Hotel.findById(hotelId)
-        if (!hotel) return res.status(404).send({ success: false, message: 'Hotel not found' })
-        
         const services = await Service.find({ hotel: hotelId })
         if (services.length === 0) return res.status(404).send({ success: false, message: 'No services found for this hotel' })
         
