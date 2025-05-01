@@ -22,4 +22,4 @@ const hotelSchema = new Schema(
     }
 )
 
-export default model("Hotels", hotelSchema);
+export default model("Hotel", hotelSchema);

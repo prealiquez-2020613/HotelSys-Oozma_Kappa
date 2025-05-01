@@ -43,10 +43,9 @@ export const updateRoleValidation = [
     validateErrorWithoutImg
 ]
 
-export const createReservationValidator = [
-    body('hotel', 'Hotel is required').notEmpty(),
-    body('room', 'Room is required').notEmpty(),
-    body('checkIn', 'Check-in date is required and must be a valid date').notEmpty().isISO8601(),
-    body('checkOut', 'Check-out date is required and must be a valid date').notEmpty().isISO8601(),
+export const generateReceiptValidator = [
+    body('nit', 'NIT is required and must be between 8 and 9 characters').notEmpty().isLength({ min: 8, max: 9 }),
+    body('reservationId').optional(),
+    body('eventId').optional().isMongoId(),
     validateErrorWithoutImg
 ]
