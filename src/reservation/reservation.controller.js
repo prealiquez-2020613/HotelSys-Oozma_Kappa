@@ -78,7 +78,7 @@ export const createReservation = async (req, res) => {
 export const getUserReservations = async (req, res) => {
     try {
         const userId = req.user.uid
-        const reservations = await Reservation.find({ user: userId }).populate('room')
+        const reservations = await Reservation.find({ user: userId }).populate('room').populate('hotel')
 
         return res.send({
             success: true,
