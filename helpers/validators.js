@@ -160,7 +160,7 @@ export const getServicesByHotelValidator = [
     validateErrorWithoutImg
 ]
 
-// --------------------------------------------------------Room Validators----------------------------------------------------------------------
+// --------------------------------------------------------Hotel Validators----------------------------------------------------------------------
 export const hotelValidator = [
     body('name', 'Name is required').notEmpty().isLength({ max: 100 }).withMessage('Name cannot exceed 100 characters'),
     body('address', 'Address is required').notEmpty(),
@@ -174,5 +174,21 @@ export const updatehotelValidator = [
     body('address').optional().notEmpty(),
     body('category').optional().notEmpty(),
     body('amenities').optional().isString(),
+    validateErrorWithoutImg
+]
+
+
+// --------------------------------------------------------Resources Validators----------------------------------------------------------------------
+export const resourceValidator = [
+    body('hotel', 'Hotel ID is required').notEmpty().isMongoId().withMessage('Hotel ID must be a valid ObjectId'),
+    body('description', 'Description cannot be empty').notEmpty(),
+    body('cost', 'Cost must be a positive number').notEmpty().isFloat({ min: 0 }).withMessage('Cost must be 0 or higher'),
+    validateErrorWithoutImg
+]
+
+export const updateResourceValidator = [
+    body('hotel').optional().isMongoId().withMessage('Hotel ID must be a valid MongoID'),
+    body('description').optional().notEmpty().withMessage('Description cannot be empty'),
+    body('cost').optional().isFloat({ min: 0 }).withMessage('Cost must be a positive number'),
     validateErrorWithoutImg
 ]
