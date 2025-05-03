@@ -50,6 +50,14 @@ export const generateReceiptValidator = [
     validateErrorWithoutImg
 ]
 
+export const createReservationValidator = [
+    body('hotel', 'Hotel is required').notEmpty().isMongoId(),
+    body('room', 'Room is required').notEmpty().isMongoId(),
+    body('checkIn', 'Check-in date is required and must be a valid date').notEmpty().isISO8601(),
+    body('checkOut', 'Check-out date is required and must be a valid date').notEmpty().isISO8601(),
+    validateErrorWithoutImg
+]
+
 
 // --------------------------------------------------------Room Validators----------------------------------------------------------------------
 export const createRoomValidator = [

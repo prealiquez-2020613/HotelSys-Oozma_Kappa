@@ -43,6 +43,11 @@ export const createReservation = async (req, res) => {
             return res.status(404).send({ success: false, message: 'Room not found' })
         }
 
+        const hotelData = await Room.findById(hotel)
+        if (!hotelData) {
+            return res.status(404).send({ success: false, message: 'Hotel not found' })
+        }
+
         let servicesData = []
         let servicesTotal = 0
 
