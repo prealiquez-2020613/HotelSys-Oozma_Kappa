@@ -1,5 +1,6 @@
 import User from '../src/user/user.model.js'
 import Hotel from '../src/hotel/hotel.model.js'
+import Service from '../src/service/service.model.js'
 import {isValidObjectId, Schema} from 'mongoose'
 
 

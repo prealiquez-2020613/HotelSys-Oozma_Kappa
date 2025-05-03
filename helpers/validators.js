@@ -50,6 +50,14 @@ export const generateReceiptValidator = [
     validateErrorWithoutImg
 ]
 
+export const createReservationValidator = [
+    body('hotel', 'Hotel is required').notEmpty().isMongoId().custom(hotelExists),
+    body('room', 'Room is required').notEmpty().isMongoId(),
+    body('checkIn', 'Check-in date is required and must be a valid date').notEmpty().isISO8601(),
+    body('checkOut', 'Check-out date is required and must be a valid date').notEmpty().isISO8601(),
+    validateErrorWithoutImg
+]
+
 
 // --------------------------------------------------------Room Validators----------------------------------------------------------------------
 export const createRoomValidator = [
@@ -71,7 +79,8 @@ export const createRoomValidator = [
         .isBoolean().withMessage('Availability must be true or false'),
 
     body('hotel')
-        .notEmpty().withMessage('Hotel reference cannot be empty'),
+        .notEmpty().withMessage('Hotel reference cannot be empty')
+        .isMongoId().withMessage('Hotel must be a valid ID'),
     validateErrorWithoutImg
 ]
 
@@ -96,11 +105,6 @@ export const updateRoomValidator = [
         .optional()
         .notEmpty().withMessage('Availability cannot be empty if provided')
         .isBoolean().withMessage('Availability must be true or false'),
-
-    body('hotel')
-        .optional()
-        .notEmpty().withMessage('Hotel reference cannot be empty if provided'),
-
     validateErrorWithoutImg
 ];
 
@@ -193,7 +197,7 @@ export const updateResourceValidator = [
 // ------------ Event Validators ------------
 
 export const addEventValidation = [
-    body('hotel', 'Hotel is required and must be an array').notEmpty(),
+    body('hotel', 'Hotel is required').notEmpty().isMongoId().withMessage('Hotel ID must be a valid ObjectId'),
     body('title', 'Title is required and must be max 25 characters').notEmpty().isLength({ max: 25 }),
     body('description', 'Description is required and must be max 100 characters').notEmpty().isLength({ max: 100 }),
     body('date', 'Date is required and must be valid').notEmpty().isISO8601(),
@@ -202,7 +206,6 @@ export const addEventValidation = [
 ]
 
 export const updateEventValidation = [
-    body('hotel').optional().notEmpty().isLength({ max: 25 }).withMessage('Hotel must be 25 characters max'),
     body('title').optional().notEmpty().isLength({ max: 25 }).withMessage('Title must be 25 characters max'),
     body('description').optional().notEmpty().isLength({ max: 100 }).withMessage('Description must be 100 characters max'),
     body('date').optional().notEmpty().isISO8601().withMessage('Date must be valid'),
