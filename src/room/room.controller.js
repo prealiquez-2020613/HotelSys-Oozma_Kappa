@@ -87,6 +87,7 @@ export const updateRoom = async (req, res) => {
         const data = req.body;
 
         const updatedRoom = await Room.findByIdAndUpdate(id, data, { new: true });
+        if(data.hotel) return res.status(403).send({message : 'You cannot update the hotel here'})
 
         if (!updatedRoom) {
             return res.status(404).send({
