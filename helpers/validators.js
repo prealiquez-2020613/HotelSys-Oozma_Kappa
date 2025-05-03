@@ -51,7 +51,7 @@ export const generateReceiptValidator = [
 ]
 
 export const createReservationValidator = [
-    body('hotel', 'Hotel is required').notEmpty().isMongoId(),
+    body('hotel', 'Hotel is required').notEmpty().isMongoId().custom(hotelExists),
     body('room', 'Room is required').notEmpty().isMongoId(),
     body('checkIn', 'Check-in date is required and must be a valid date').notEmpty().isISO8601(),
     body('checkOut', 'Check-out date is required and must be a valid date').notEmpty().isISO8601(),
