@@ -189,7 +189,7 @@ export const updateResourceValidator = [
 // ------------ Event Validators ------------
 
 export const addEventValidation = [
-    body('hotel', 'Hotel is required and must be an array').notEmpty(),
+    body('hotel', 'Hotel is required').notEmpty().isMongoId().withMessage('Hotel ID must be a valid ObjectId'),
     body('title', 'Title is required and must be max 25 characters').notEmpty().isLength({ max: 25 }),
     body('description', 'Description is required and must be max 100 characters').notEmpty().isLength({ max: 100 }),
     body('date', 'Date is required and must be valid').notEmpty().isISO8601(),
@@ -198,7 +198,6 @@ export const addEventValidation = [
 ]
 
 export const updateEventValidation = [
-    body('hotel').optional().notEmpty().isLength({ max: 25 }).withMessage('Hotel must be 25 characters max'),
     body('title').optional().notEmpty().isLength({ max: 25 }).withMessage('Title must be 25 characters max'),
     body('description').optional().notEmpty().isLength({ max: 100 }).withMessage('Description must be 100 characters max'),
     body('date').optional().notEmpty().isISO8601().withMessage('Date must be valid'),
