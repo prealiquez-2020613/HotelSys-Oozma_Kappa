@@ -80,7 +80,7 @@ export const createRoomValidator = [
 
     body('hotel')
         .notEmpty().withMessage('Hotel reference cannot be empty')
-        .isMongoId().withMessage('Hotel must be a valid ID'),
+        .isMongoId().custom(hotelExists).withMessage('Hotel must be a valid ID'),
     validateErrorWithoutImg
 ]
 
