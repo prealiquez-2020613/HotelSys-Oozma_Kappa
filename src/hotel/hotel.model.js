@@ -13,11 +13,17 @@ const hotelSchema = new Schema(
         },
         category: {
             type: String,
-            required: [true, "Category is required"]
+            required: [true, "Category is required"],
+            enum: ["ONE STAR", "TWO STARS", "THREE STARS", "FOUR STARS", "FIVE STARS"],
+            uppercase: true,
         },
-        amenities: {
-            type: String, 
-            default: []
+        description: {
+            type: String,
+            required: [true, "Description is required"]
+        },
+        imageUrl: {
+            type: String,
+            required: [true, "Category is required"]
         }
     }
 )

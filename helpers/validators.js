@@ -166,15 +166,17 @@ export const hotelValidator = [
     body('name', 'Name is required').notEmpty().isLength({ max: 100 }).withMessage('Name cannot exceed 100 characters'),
     body('address', 'Address is required').notEmpty(),
     body('category', 'Category is required').notEmpty(),
-    body('amenities', 'Each amenity must be a string').optional().isString(),
+    body('Description', 'Description cannot be empty').notEmpty().isString(),
+    body('imageUrl', 'Image cannot be empty').notEmpty().isString(),
     validateErrorWithoutImg
 ]
 
 export const updatehotelValidator = [
     body('name').optional().notEmpty().withMessage('Name cannot be empty').isLength({ max: 100 }).withMessage('Name cannot exceed 100 characters'),
     body('address').optional().notEmpty(),
-    body('category').optional().notEmpty(),
-    body('amenities').optional().isString(),
+    body('category', 'Category is required').optional().notEmpty(),
+    body('Description', 'Description cannot be empty').optional().isString(),
+    body('imageUrl', 'Image cannot be empty').optional().isString(),
     validateErrorWithoutImg
 ]
 
