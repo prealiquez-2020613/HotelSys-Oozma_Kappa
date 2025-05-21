@@ -17,6 +17,6 @@ api.post('/createHotel', [validateJwt, adminValidation, hotelValidator], saveHot
 api.put('/updateHotel/:id', [validateJwt, hotelAdminValidation, updatehotelValidator], updateHotel)
 api.delete('/deleteHotel/:id', [validateJwt, adminValidation],  deleteHotel)
 api.get('/getAllHotels', getAllHotels)
-api.get('/getHotel/:id', [validateJwt], getHotel)
+api.get('/getHotel/:id', getHotel)
 
 export default api
