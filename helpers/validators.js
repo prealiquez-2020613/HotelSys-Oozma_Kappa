@@ -61,6 +61,10 @@ export const createReservationValidator = [
 
 // --------------------------------------------------------Room Validators----------------------------------------------------------------------
 export const createRoomValidator = [
+    body('name')
+        .notEmpty().withMessage('Name cannot be empty')
+        .isString().withMessage('Name must be a string')
+        .isLength({ max: 30 }).withMessage('Name cannot exceed 30 characters'),
     body('type')
         .notEmpty().withMessage('Type cannot be empty')
         .isString().withMessage('Type must be a string')
@@ -85,6 +89,12 @@ export const createRoomValidator = [
 ]
 
 export const updateRoomValidator = [
+    body('name')
+        .optional()
+        .notEmpty().withMessage('Name cannot be empty if provided')
+        .isString().withMessage('Name must be a string')
+        .isLength({ max: 30 }).withMessage('Name cannot exceed 30 characters'),
+
     body('type')
         .optional()
         .notEmpty().withMessage('Type cannot be empty if provided')

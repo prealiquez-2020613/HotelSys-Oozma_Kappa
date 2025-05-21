@@ -2,6 +2,11 @@ import { Schema, model } from "mongoose";
 
 const roomSchema = Schema(
     {
+        name: {
+            type: String,
+            required: [true, 'Name is a required field'],
+            maxLength: [30, 'Name cannot exceed 30 characters']
+        },
         type: {
             type: String,
             required: [true, 'Room type is a required field'],
