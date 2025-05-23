@@ -137,3 +137,26 @@ export const deleteRoom = async (req, res) => {
         });
     }
 };
+
+export const getRoomByHotel = async (req, res) => {
+    try {
+
+        //solicitar el id del hotel. data.idHotel
+        let { idHotel } = req.query;
+        if (!idHotel) return res.status(400).send({ message: 'ID hotel no ingresado.' })
+
+        const hotel = await Hotel.findById(idHotel)
+        if (!hotel) return res.status(404).send({ message: 'Hotel no encontrado.' })
+        console.log(hotel);
+        const rooms = await Room.find({ hotel: idHotel })
+        console.log(rooms);
+
+        return res.send(rooms)
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Internal server error',
+            success: false,
+            error
+        });
+    }
+};
