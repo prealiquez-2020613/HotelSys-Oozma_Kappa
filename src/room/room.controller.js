@@ -1,6 +1,7 @@
 'use strict';
 
 import Room from './room.model.js';
+import Hotel from '../hotel/hotel.model.js';
 import mongoose from 'mongoose';
 
 export const createRoom = async (req, res) => {
